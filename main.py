@@ -15,6 +15,8 @@ import dialogs
 #pour afficher la date 
 import datetime
 
+import sqlite3
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -36,32 +38,32 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(card_layout)
 
         # Card informations
-        card_name_label = QLabel("Nom de la carte :")
-        card_name_label.setText("Développeur Front React.JS")
-        card_description_text = QLabel("Description de la fiche de poste :")
-        card_description_text = QTextEdit("Les équipes TECH CANAL+ comptent plus de 500 experts dédiés à l'innovation technologique. Ils visent à améliorer l'expérience des abonnés par le biais d'une approche agile et novatrice, tout en étendant leur influence sur les marchés internationaux.")
-        card_url_label = QLabel("URL de l'annonce :")
-        card_url_browser = QTextBrowser()  # Utilisez QTextBrowser pour l'URL
-        card_url_browser.setOpenExternalLinks(True)  # Activez l'ouverture de liens externes
-        card_url_browser.setPlainText("https://fr.indeed.com/?from=gnav-jobsearch--indeedmobile&vjk=d796ad4bb90c7fbc&advn=4190676325902957")  # Définissez le lien URL
-        card_url_browser.setOpenExternalLinks(True)
-        card_location = QLabel("Localisation")
-        card_location_value = QLabel("Puteaux, FRANCE")
+        self.card_name_label = QLabel("Nom de la carte :")
+        self.card_name_label.setText("Actor/Actress J&M")
+        self.card_description_text = QLabel("Description de la fiche de poste :")
+        self.card_description_text = QTextEdit("blablabla")
+        self.card_url_label = QLabel("URL de l'annonce :")
+        self.card_url_browser = QTextBrowser()  # Utilisez QTextBrowser pour l'URL
+        self.card_url_browser.setOpenExternalLinks(True)  # Activez l'ouverture de liens externes
+        self.card_url_browser.setPlainText("jkzebvoizlefi")  # Définissez le lien URL
+        self.card_url_browser.setOpenExternalLinks(True)
+        self.card_location = QLabel("Localisation")
+        self.card_location_value = QLabel("tes grands morts")
 
         
         # add informations to card...
-        card_layout.addWidget(card_name_label)
-        card_layout.addWidget(card_description_text)
-        card_layout.addWidget(card_url_label)
-        card_layout.addWidget(card_url_browser)
-        card_layout.addWidget(card_location)
-        card_layout.addWidget(card_location_value)
+        card_layout.addWidget(self.card_name_label)
+        card_layout.addWidget(self.card_description_text)
+        card_layout.addWidget(self.card_url_label)
+        card_layout.addWidget(self.card_url_browser)
+        card_layout.addWidget(self.card_location)
+        card_layout.addWidget(self.card_location_value)
         
         #card size 
-        card_description_text.setFixedHeight(200)
-        card_description_text.setFixedWidth(300)
-        card_url_browser.setFixedWidth(300)
-        card_url_browser.setFixedHeight(70)
+        self.card_description_text.setFixedHeight(200)
+        self.card_description_text.setFixedWidth(300)
+        self.card_url_browser.setFixedWidth(300)
+        self.card_url_browser.setFixedHeight(70)
 
         #date
         self.date_label = QLabel(self)
@@ -98,6 +100,10 @@ class MainWindow(QMainWindow):
         self.setStatusBar(QStatusBar(self))
         self.status = self.statusBar()
 
+
+        ##Database
+        self.load_data()
+
     #Action btn
     def quit(self):
         if dialogs.confirm(self):
@@ -108,11 +114,32 @@ class MainWindow(QMainWindow):
         clipboard.setText()
         
 
-
+    #function date of the day...
     def get_current_date(self):
-        # Utilisez la bibliothèque datetime pour obtenir la date actuelle
         current_date = datetime.date.today()
         return current_date.strftime("Date du jour : %d/%m/%Y") 
+    
+    def load_data(self):
+    # Établir une connexion à la base de données
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+
+        # Exécuter une requête pour récupérer les données
+        query = "SELECT description, name, location, url FROM jobs"
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # Fermer la connexion à la base de données
+        connection.close()
+
+        # Mettre à jour les labels ou QTextBrowser de votre interface avec les données récupérées
+        if data:
+            description, name, location, url = data[0]  # Supposons que vous récupérez la première ligne de données
+            self.card_name_label.setText(name)
+            self.card_description_text.setText(description)
+            self.card_location_value.setText(location)
+            self.card_url_browser.setPlainText(url)
+
 
 app = QApplication(sys.argv)
 
