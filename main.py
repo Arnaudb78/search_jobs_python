@@ -39,16 +39,16 @@ class MainWindow(QMainWindow):
 
         # Card informations
         self.card_name_label = QLabel("Nom de la carte :")
-        self.card_name_label.setText("Actor/Actress J&M")
+        self.card_name_label.setText(" ")
         self.card_description_text = QLabel("Description de la fiche de poste :")
-        self.card_description_text = QTextEdit("blablabla")
+        self.card_description_text = QTextEdit(" ")
         self.card_url_label = QLabel("URL de l'annonce :")
         self.card_url_browser = QTextBrowser()  # Utilisez QTextBrowser pour l'URL
         self.card_url_browser.setOpenExternalLinks(True)  # Activez l'ouverture de liens externes
-        self.card_url_browser.setPlainText("jkzebvoizlefi")  # Définissez le lien URL
+        self.card_url_browser.setPlainText(" ")  # Définissez le lien URL
         self.card_url_browser.setOpenExternalLinks(True)
         self.card_location = QLabel("Localisation")
-        self.card_location_value = QLabel("tes grands morts")
+        self.card_location_value = QLabel(" ")
 
         
         # add informations to card...
@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
 
         # Mettre à jour les labels ou QTextBrowser de votre interface avec les données récupérées
         if data:
-            description, name, location, url = data[0]  # Supposons que vous récupérez la première ligne de données
+            description, name, location, url = data[1]  # Supposons que vous récupérez la première ligne de données
             self.card_name_label.setText(name)
             self.card_description_text.setText(description)
             self.card_location_value.setText(location)
