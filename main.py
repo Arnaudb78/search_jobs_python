@@ -76,8 +76,8 @@ class MainWindow(QMainWindow):
         # option_layout.addWidget(self.card_url_browser, 1, 1)
         # option_layout.addWidget(self.card_location, 2, 0)
         # option_layout.addWidget(self.card_location_value, 2, 1)
-        # option_layout.addWidget(self.card_type, 3, 0)
-        # option_layout.addWidget(self.card_type_value, 3, 1)
+        option_layout.addWidget(self.card_type, 0, 3)
+        option_layout.addWidget(self.card_type_value, 1, 3)
 
         #date
         self.date_label = QLabel(self)
@@ -86,6 +86,10 @@ class MainWindow(QMainWindow):
 
         #btn
         btn_quit = QPushButton("Quitter", self)
+        button_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)
+
+        btn_next = QPushButton("Suivant", self)
+        button_layout.addWidget(btn_next)
 
         #Checkbox params
         self.option_jobs = QCheckBox("Emploie")
@@ -101,7 +105,6 @@ class MainWindow(QMainWindow):
         #Connect btn
         btn_quit.clicked.connect(self.quit)
         
-
         #status bar
         self.status_bar = self.statusBar()
         self.status_bar.showMessage("(c) Moisi Corp Limited", 0)
@@ -114,10 +117,6 @@ class MainWindow(QMainWindow):
     def quit(self):
         if dialogs.confirm(self):
             QApplication.quit() 
-
-    def copy(self):
-        clipboard = QApplication.clipboard()
-        clipboard.setText()
         
 
     #function date of the day...
