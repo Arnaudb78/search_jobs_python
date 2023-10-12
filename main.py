@@ -36,22 +36,29 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(card_layout)
 
         # Card informations
-        card_name_label = QLabel("Nom de la carte : Acteur PH Premium")
-        card_description_text = QTextEdit("Description de la carte...")
+        card_name_label = QLabel("Nom de la carte :")
+        card_name_label.setText("Développeur Front React.JS")
+        card_description_text = QLabel("Description de la fiche de poste :")
+        card_description_text = QTextEdit("Les équipes TECH CANAL+ comptent plus de 500 experts dédiés à l'innovation technologique. Ils visent à améliorer l'expérience des abonnés par le biais d'une approche agile et novatrice, tout en étendant leur influence sur les marchés internationaux.")
         card_url_label = QLabel("URL de l'annonce :")
         card_url_browser = QTextBrowser()  # Utilisez QTextBrowser pour l'URL
         card_url_browser.setOpenExternalLinks(True)  # Activez l'ouverture de liens externes
         card_url_browser.setPlainText("https://fr.indeed.com/?from=gnav-jobsearch--indeedmobile&vjk=d796ad4bb90c7fbc&advn=4190676325902957")  # Définissez le lien URL
         card_url_browser.setOpenExternalLinks(True)
+        card_location = QLabel("Localisation")
+        card_location_value = QLabel("Puteaux, FRANCE")
 
+        
         # add informations to card...
         card_layout.addWidget(card_name_label)
         card_layout.addWidget(card_description_text)
         card_layout.addWidget(card_url_label)
         card_layout.addWidget(card_url_browser)
+        card_layout.addWidget(card_location)
+        card_layout.addWidget(card_location_value)
         
         #card size 
-        card_description_text.setFixedHeight(300)
+        card_description_text.setFixedHeight(200)
         card_description_text.setFixedWidth(300)
         card_url_browser.setFixedWidth(300)
         card_url_browser.setFixedHeight(70)
