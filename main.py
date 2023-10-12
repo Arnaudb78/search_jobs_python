@@ -49,6 +49,8 @@ class MainWindow(QMainWindow):
         self.card_url_browser.setOpenExternalLinks(True)
         self.card_location = QLabel("Localisation")
         self.card_location_value = QLabel(" ")
+        self.card_type = QLabel("Contrat :")
+        self.card_type_value = QLabel(" ")
 
         
         # add informations to card...
@@ -58,6 +60,8 @@ class MainWindow(QMainWindow):
         card_layout.addWidget(self.card_url_browser)
         card_layout.addWidget(self.card_location)
         card_layout.addWidget(self.card_location_value)
+        card_layout.addWidget(self.card_type)
+        card_layout.addWidget(self.card_type_value)
         
         #card size 
         self.card_description_text.setFixedHeight(200)
@@ -65,21 +69,23 @@ class MainWindow(QMainWindow):
         self.card_url_browser.setFixedWidth(300)
         self.card_url_browser.setFixedHeight(70)
 
+        #Element card position 
+        # option_layout.addWidget( self.card_name_label, 0, 0)
+        # option_layout.addWidget(self.card_description_text, 0, 1)
+        # option_layout.addWidget(self.card_url_label, 1, 0)
+        # option_layout.addWidget(self.card_url_browser, 1, 1)
+        # option_layout.addWidget(self.card_location, 2, 0)
+        # option_layout.addWidget(self.card_location_value, 2, 1)
+        # option_layout.addWidget(self.card_type, 3, 0)
+        # option_layout.addWidget(self.card_type_value, 3, 1)
+
         #date
         self.date_label = QLabel(self)
-        self.date_label.setAlignment(Qt.AlignTop | Qt.AlignRight)
         self.date_label.setFont(QFont("Arial", 14))
         self.date_label.setText(self.get_current_date())
-        main_layout.addWidget(self.date_label)
 
         #btn
         btn_quit = QPushButton("Quitter", self)
-        btn_copy = QPushButton("Copy", self)
-        btn_generate = QPushButton("Générer", self)
-        button_layout.addWidget(btn_quit)
-        button_layout.addWidget(btn_copy)
-        button_layout.addWidget(btn_generate)
-
 
         #Checkbox params
         self.option_jobs = QCheckBox("Emploie")
@@ -94,12 +100,12 @@ class MainWindow(QMainWindow):
 
         #Connect btn
         btn_quit.clicked.connect(self.quit)
-        btn_copy.clicked.connect(self.copy)
+        
 
         #status bar
-        self.setStatusBar(QStatusBar(self))
-        self.status = self.statusBar()
-
+        self.status_bar = self.statusBar()
+        self.status_bar.showMessage("(c) Moisi Corp Limited", 0)
+        self.status_bar.addPermanentWidget(self.date_label)
 
         ##Database
         self.load_data()
@@ -125,7 +131,7 @@ class MainWindow(QMainWindow):
         cursor = connection.cursor()
 
         # Exécuter une requête pour récupérer les données
-        query = "SELECT description, name, location, url FROM jobs"
+        query = "SELECT description, name, location, url, type FROM jobs"
         cursor.execute(query)
         data = cursor.fetchall()
 
@@ -134,11 +140,12 @@ class MainWindow(QMainWindow):
 
         # Mettre à jour les labels ou QTextBrowser de votre interface avec les données récupérées
         if data:
-            description, name, location, url = data[1]  # Supposons que vous récupérez la première ligne de données
+            description, name, location, url, type = data[2]  # Supposons que vous récupérez la première ligne de données
             self.card_name_label.setText(name)
             self.card_description_text.setText(description)
             self.card_location_value.setText(location)
             self.card_url_browser.setPlainText(url)
+            self.card_type_value.setText(type)
 
 
 app = QApplication(sys.argv)
